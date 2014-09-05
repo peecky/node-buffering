@@ -1,0 +1,37 @@
+{
+  "name": "node-buffering",
+  "description": "Buffering data. Process buffered data in bulk",
+  "keywords": [
+    "buffering",
+    "bulk",
+    "flush"
+  ],
+  "homepage": "https://github.com/peecky/node-buffering",
+  "author": "Kim Yungu",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/peecky/node-buffering"
+  },
+  "main": "index.js",
+  "version": "0.1.0",
+  "engines": [
+    "node >= 0.10.0"
+  ],
+  "bugs": {
+    "url": "https://github.com/peecky/node-buffering/issues"
+  },
+  "scripts": {
+    "test": "./node_modules/.bin/jshint *.js lib"
+  },
+  "license": "MIT",
+  "directories": {
+    "test": "test"
+  },
+  "dependencies": {
+    "underscore": "*"
+  },
+  "devDependencies": {
+    "jshint": "*"
+  },
+  "readmeFilename": "README.md"
+}
