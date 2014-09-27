@@ -100,6 +100,15 @@ The running query would be:
 
 	INSERT INTO read_post (user_id, post_id) VALUES ('shana', 141), ('nagi', 138), ('louise', 153), ('taiga', 145)
 
+VS
+
+	INSERT INTO read_post (user_id, post_id) VALUES ('shana', 141)
+	INSERT INTO read_post (user_id, post_id) VALUES ('nagi', 138)
+	INSERT INTO read_post (user_id, post_id) VALUES ('louise', 153)
+	INSERT INTO read_post (user_id, post_id) VALUES ('taiga', 145)
+
+of without buffering.
+
 ## Documentation
 
 ### new Buffering([options])
@@ -107,8 +116,8 @@ The running query would be:
 Create a Buffering instance.
 
 * options: (Object, optional)
-* options.timeThreshold: (optional. default: -1) Maximum duration of buffering before automatical flush in milliseconds. -1 for infinite.
-* options.sizeThreshold: (optional. default: -1) Maximun count of data of buffering before automatical flush. -1 for infinite.
+ * timeThreshold: (optional. default: -1) Maximum duration of buffering before automatical flush in milliseconds. -1 for infinite.
+ * sizeThreshold: (optional. default: -1) Maximun count of data of buffering before automatical flush. -1 for infinite.
 
 ### Buffering.prototype.enqueue(data)
 
@@ -134,7 +143,7 @@ This fuction do nothing if the buffering instance is paused.
 
 Pause the buffering instance. You can add data to paused buffering instance but they will not be flushed while it is paused.
 
-* duration: (optional) Duration of paused state in milliseconds. The paused state will be end when duration milliseconds passed. Default for forever.
+* duration: (optional. default: -1) Duration of paused state in milliseconds. The paused state will be end when duration milliseconds passed. -1 for forever.
 
 ### Buffering.prototype.resume()
 
