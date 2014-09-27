@@ -28,7 +28,6 @@
     "test": "test"
   },
   "dependencies": {
-    "underscore": "*"
   },
   "devDependencies": {
     "jshint": "*"
