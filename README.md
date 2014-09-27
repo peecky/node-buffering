@@ -100,3 +100,47 @@ The running query would be:
 
 	INSERT INTO read_post (user_id, post_id) VALUES ('shana', 141), ('nagi', 138), ('louise', 153), ('taiga', 145)
 
+## Documentation
+
+### new Buffering([options])
+
+Create a Buffering instance.
+
+* options: (Object, optional)
+* options.timeThreshold: (optional. default: -1) Maximum duration of buffering before automatical flush in milliseconds. -1 for infinite.
+* options.sizeThreshold: (optional. default: -1) Maximun count of data of buffering before automatical flush. -1 for infinite.
+
+### Buffering.prototype.enqueue(data)
+
+Add data to the end of the buffer. You can add multiple data.
+
+* data: Array of data to buffer.
+
+### Buffering.prototype.undequeue(data)
+
+Add data to the front of the buffer. You can add multiple data. This is useful when you undo the flushing.
+
+Be careful that when the flushing occurred because of the size threshold and you want to undo flushing, you should pause the buffering instance before calling undequeue() if you do not want instant flushing just after calling undequeue().
+
+* data: Array of data to buffer.
+
+### Buffering.prototype.flush()
+
+Explicitly flush buffered data. If both `timeThreshold` and `sizeThreshold` are infinite, you should call this function manually.
+
+This fuction do nothing if the buffering instance is paused.
+
+### Buffering.prototype.pause([duration])
+
+Pause the buffering instance. You can add data to paused buffering instance but they will not be flushed while it is paused.
+
+* duration: (optional) Duration of paused state in milliseconds. The paused state will be end when duration milliseconds passed. Default for forever.
+
+### Buffering.prototype.resume()
+
+Resume the paused buffering instance.
+
+### Buffering.prototype.size()
+
+Return the count of buffered data.
+
