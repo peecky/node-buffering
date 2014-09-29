@@ -24,7 +24,7 @@ buffering.on('flush', function(data) {
         mysql.query(query, function(err, result) {
             connection.close();
             if (err) {
-                if (err.code === 'DEADLOCK') {
+                if (err.code === 'ER_LOCK_DEADLOCK') {
                     // retry on 5 seconds later
                     buffering.pause(5000);
                     buffering.undequeue(data);
