@@ -109,6 +109,22 @@ VS
 
 of without buffering.
 
+### Retry later
+
+	var retryBuffering = new Buffering({ timeThreshold: 1800000 }); // 30 min
+	retryBuffering.on('flush', function(data) {
+		data.forEach(syndicate);
+	});
+
+	function syndicate(url) {
+		request.post({ url: 'https://apis.example.org/syndicate', body: { ping_url: url } }, function(err, res, body) {
+			if (err || Math.floor(res.statusCode / 100) === 5) retryBuffering.enqueue([url]); // The remote server is temporarily unavailable. Retry it later
+		});
+	}
+
+	// syndicate new article
+	syndicate('https://mysite.com/article/1');
+
 ## Documentation
 
 ### new Buffering([options])
