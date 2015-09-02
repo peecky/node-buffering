@@ -126,7 +126,7 @@ Slightly modify example above:
 	function onAction(user_id, action) {
 		var action_time = new Date();
 		var obj[user_id] = [user_id, action, action_time]
-	    bufferingUniq.enqueue(obj);
+		bufferingUniq.enqueue(obj);
 	}
 	
 	// events of user actions
