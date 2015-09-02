@@ -13,7 +13,7 @@
     "url": "git://github.com/peecky/node-buffering"
   },
   "main": "index.js",
-  "version": "0.1.3",
+  "version": "0.2.0",
   "engines": [
     "node >= 0.10.0"
   ],
@@ -21,7 +21,7 @@
     "url": "https://github.com/peecky/node-buffering/issues"
   },
   "scripts": {
-    "test": "./node_modules/.bin/jshint *.js lib"
+    "test": "./node_modules/.bin/jshint *.js lib && node test"
   },
   "license": "MIT",
   "directories": {
