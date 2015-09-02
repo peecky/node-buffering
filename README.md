@@ -19,6 +19,9 @@ Delay jobs. Buffer data. Process data in bulk.
 	buffering.enqueue(['five']);
 	buffering.flush(); // [ 'four', 'five' ]
 
+for unique buffering, see section **example when useUnique is true**
+
+
 ### Size Threshold
 
 	var Buffering = require('node-buffering');
@@ -109,6 +112,35 @@ VS
 
 of without buffering.
 
+#### example when useUnique is true
+
+Assuming you want to log last activity of users as well, you can create second instance.
+
+Turn option on:
+
+	var bufferingUniq = new Buffering({ sizeThreshold: 100, timeThreshold: 5000, useUnique: true });
+
+Slightly modify example above:
+
+	// when use did some action
+	function onAction(user_id, action) {
+		var action_time = new Date();
+		var obj[user_id] = [user_id, action, action_time]
+	    bufferingUniq.enqueue(obj);
+	}
+	
+	// events of user actions
+	setTimeout(function() { onAction('nagi', 'read post 2'); }, 1000);
+	setTimeout(function() { onAction('shana', 'read post 1'); }, 1500);
+	setTimeout(function() { onAction('nagi', 'read post 1'); }, 1500);
+	setTimeout(function() { onAction('louise', 'delete post 3'); }, 2000);
+	setTimeout(function() { onAction('shana', 'create post 4'); }, 2500);
+	setTimeout(function() { onAction('nagi', 'like post 1'); }, 4000);
+
+Flushed output format will similar to example above (an Array), and sql syntax would like:
+
+	INSERT INTO last_activity (user_id, action, action_time) VALUES ('nagi', 'like post 1', '1438145610.000'), ('shana', 'create post 4', '1438145608.500'), ('louise', 'delete post 3', '1438145608.000')
+
 ### Retry later
 
 	var retryBuffering = new Buffering({ timeThreshold: 1800000 }); // 30 min
@@ -134,16 +166,19 @@ Create a Buffering instance.
 * options: (Object, optional)
  * timeThreshold: (optional. default: -1) Maximum duration of buffering before automatical flush in milliseconds. -1 for infinite.
  * sizeThreshold: (optional. default: -1) Maximun count of data of buffering before automatical flush. -1 for infinite.
+ * useUnique: (optional. default: false) Unique key aware buffering
 
 ### Buffering.prototype.enqueue(data)
 
 Add data to the end of the buffer. You can add multiple data.
 
 * data: Array of data to buffer.
+ * if useUnique is false: Array of data to buffer.
+ * if useUnique is true: Object of data to buffer.
 
 ### Buffering.prototype.undequeue(data)
 
-Add data to the front of the buffer. You can add multiple data. This is useful when you undo the flushing.
+Add data back to the flushQueue. You can add multiple data. This is useful when you undo the flushing.
 
 Be careful that when the flushing occurred because of the size threshold and you want to undo flushing, you should pause the buffering instance before calling undequeue() if you do not want instant flushing just after calling undequeue().
 
