@@ -178,7 +178,7 @@ Add data to the end of the buffer. You can add multiple data.
 
 ### Buffering.prototype.undequeue(data)
 
-Add data back to the flushQueue. You can add multiple data. This is useful when you undo the flushing.
+Add data to the front of the buffer. You can add multiple data. This is useful when you undo the flushing.
 
 Be careful that when the flushing occurred because of the size threshold and you want to undo flushing, you should pause the buffering instance before calling undequeue() if you do not want instant flushing just after calling undequeue().
 
